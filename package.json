@@ -1,7 +1,11 @@
 {
   "name": "linkedin-oauth",
-  "version": "0.0.2",
-  "description": "",
+  "version": "0.0.3",
+  "description": "Linkedin Oauth implementation",
+  "keywords": [
+    "linkedin-oauth",
+    "login with linkedin"
+  ],
   "homepage": "https://github.com/shresthadeepesh/linkedin-oauth",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -17,7 +21,6 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {

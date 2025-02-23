@@ -20,11 +20,11 @@ const config: LinkedInOAuthConfig = {
 };
 
 const LINKEDIN_SUCCESS_CALLBACK_URI = "";
-const LINKEDIN_FAILURE__CALLBACK_URI = "";
+const LINKEDIN_FAILURE_CALLBACK_URI = "";
 
 const linkedInOAuth = new LinkedInOAuth(config);
 
-app.get("/linkedin", (req, res) => {
+app.get("/linkedin", (req: Request, res: Response) => {
   const redirectUri = linkedInOAuth.getAuthorizationUrl();
   return res.redirect(redirectUri);
 });
@@ -34,7 +34,7 @@ app.get("/linkedin/callback", async (req: Request, res: Response) => {
 
   if (!code) {
     console.error("No linkedin code available.");
-    return res.redirect(`${LINKEDIN_FAILURE__CALLBACK_URI}?success=false`);
+    return res.redirect(`${LINKEDIN_FAILURE_CALLBACK_URI}?success=false`);
   }
 
   try {
@@ -54,7 +54,7 @@ app.get("/linkedin/callback", async (req: Request, res: Response) => {
   } catch (err) {
     console.error(err);
     if (err instanceof LinkedInOAuthException) {
-      return res.redirect(`${LINKEDIN_FAILURE__CALLBACK_URI}?success=false`);
+      return res.redirect(`${LINKEDIN_FAILURE_CALLBACK_URI}?success=false`);
     }
   }
 });
