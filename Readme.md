@@ -32,9 +32,14 @@ app.get("/linkedin/callback", async (req: Request, res: Response) => {
   try {
     //retrieving access token to get the user profile...
     const linkedInAccessToken = await linkedInOAuth.getAccessToken(code);
+
+    // Getting user profile
     const linkedInProfile = await linkedInOAuth.getUserProfile(
       linkedInAccessToken.access_token,
     );
+
+    // Alternatively use ID token.
+    const userProfileFromIdToken = linkedInOAuth.getUserProfileFromIdToken(linkedInAccessToken.id_token);
 
     // Use the linkedin profile to either register or signup or create a seperate endpoint to handle each register/login
     const applicationAccessToken =

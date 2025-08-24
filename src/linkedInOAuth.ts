@@ -8,6 +8,7 @@ import {
 import { LinkedInOAuthException } from "./linkedInOAuthException";
 import {
   AccessTokenResponse,
+  IdTokenPayload,
   LinkedInOAuthConfig,
   UserProfile,
 } from "./linkedInType";
@@ -57,8 +58,7 @@ export class LinkedInOAuth {
       return response.data;
     } catch (error: any) {
       throw new LinkedInOAuthException(
-        `Failed to fetch access token: ${
-          error?.response?.data?.error_description || error.message
+        `Failed to fetch access token: ${error?.response?.data?.error_description || error.message
         }`,
       );
     }
@@ -75,10 +75,25 @@ export class LinkedInOAuth {
       return response.data as UserProfile;
     } catch (error: any) {
       throw new LinkedInOAuthException(
-        `Failed to get user profile: ${
-          error?.response?.data?.error_description || error.message
+        `Failed to get user profile: ${error?.response?.data?.error_description || error.message
         }`,
       );
     }
+  }
+
+  getUserProfileFromIdToken(idToken: string): IdTokenPayload {
+    const { payload } = this.decodeJWT<IdTokenPayload>(idToken);
+    return payload as IdTokenPayload;
+  }
+
+  private decodeJWT<TPayload>(token: string): { header: unknown; payload: TPayload } {
+    const [header, payload] = token.split(".");
+    const decodeHeader = JSON.parse(Buffer.from(header, "base64url").toString());
+    const decodePayload = JSON.parse(Buffer.from(payload, "base64url").toString());
+
+    return {
+      header: decodeHeader as unknown,
+      payload: decodePayload as TPayload,
+    };
   }
 }
