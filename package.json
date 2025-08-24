@@ -1,6 +1,6 @@
 {
   "name": "linkedin-oauth",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Linkedin Oauth implementation",
   "keywords": [
     "linkedin-oauth",
@@ -24,15 +24,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
-    "querystring": "^0.2.1"
+    "axios": "^1.11.0",
+    "dotenv": "^16.6.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.17.2",
     "express": "^4.21.2",
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.10.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.9.2"
   }
 }

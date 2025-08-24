@@ -1,4 +1,3 @@
-import * as queryString from "node:querystring";
 import axios from "axios";
 import {
   LinkedInAuthUrl,
@@ -27,20 +26,21 @@ export class LinkedInOAuth {
   }
 
   getAuthorizationUrl(state?: string, scopes: string[] = this.defaultScopes) {
-    const params = queryString.stringify({
+    const params = new URLSearchParams({
       response_type: "code",
       clientId: this.clientId,
       clientSecret: this.clientSecret,
       redirectUri: this.redirectUri,
-      scopes,
-      state,
+      scopes: scopes.join(' '),
     });
 
-    return `${LinkedInAuthUrl}?${params}`;
+    if (state) params.set('state', state);
+
+    return `${LinkedInAuthUrl}?${params.toString()}`;
   }
 
   async getAccessToken(code: string): Promise<AccessTokenResponse> {
-    const params = queryString.stringify({
+    const params = new URLSearchParams({
       grant_type: "authorization_code",
       code,
       clientId: this.clientId,
